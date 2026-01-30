@@ -56,6 +56,11 @@ htmlFiles.forEach(file => {
   const apiKey = process.env.YANDEX_MAPS_API_KEY;
   if (apiKey && html.includes('api-maps.yandex.ru')) {
     const beforeYandex = html;
+    // Заменяем плейсхолдер или реальное значение
+    html = html.replace(
+      /https:\/\/api-maps\.yandex\.ru\/2\.1\/\?apikey=\{\{YANDEX_MAPS_API_KEY\}\}/,
+      `https://api-maps.yandex.ru/2.1/?apikey=${apiKey}`
+    );
     html = html.replace(
       /https:\/\/api-maps\.yandex\.ru\/2\.1\/\?apikey=[^&"']+/,
       `https://api-maps.yandex.ru/2.1/?apikey=${apiKey}`
