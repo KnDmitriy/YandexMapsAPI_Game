@@ -3,8 +3,9 @@ const path = require('path');
 
 require('dotenv').config();
 
-// Список HTML файлов для обработки
+// Список файлов для обработки
 const htmlFiles = ['index.html', 'auth.html', 'login.html'];
+const jsFiles = ['src/index.js'];
 
 // Функция замены Firebase конфигурации
 function replaceFirebaseConfig(html) {
@@ -65,7 +66,7 @@ htmlFiles.forEach(file => {
   }
 
   // Заменяем Firebase конфигурацию (если есть в файле)
-  if (html.includes('firebaseConfig')) {
+  if (html.includes('firebaseConfig') || html.includes('{{FIREBASE_API_KEY}}')) {
     const beforeFirebase = html;
     html = replaceFirebaseConfig(html);
     if (beforeFirebase !== html) {
@@ -75,6 +76,34 @@ htmlFiles.forEach(file => {
 
   if (updated) {
     fs.writeFileSync(htmlPath, html, 'utf8');
+    console.log(`✅ Updated ${file}`);
+  } else {
+    console.log(`ℹ️  No changes needed in ${file}`);
+  }
+});
+
+// Обрабатываем JS файлы
+jsFiles.forEach(file => {
+  const jsPath = path.join(__dirname, file);
+  if (!fs.existsSync(jsPath)) {
+    console.warn(`⚠️  File ${file} not found, skipping...`);
+    return;
+  }
+
+  let js = fs.readFileSync(jsPath, 'utf8');
+  let updated = false;
+
+  // Заменяем Firebase конфигурацию (если есть плейсхолдеры)
+  if (js.includes('{{FIREBASE_API_KEY}}')) {
+    const beforeFirebase = js;
+    js = replaceFirebaseConfig(js);
+    if (beforeFirebase !== js) {
+      updated = true;
+    }
+  }
+
+  if (updated) {
+    fs.writeFileSync(jsPath, js, 'utf8');
     console.log(`✅ Updated ${file}`);
   } else {
     console.log(`ℹ️  No changes needed in ${file}`);
