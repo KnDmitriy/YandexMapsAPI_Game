@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Угадай достопримечательность Саратова</title>
+	<script type="module" src="src/index.js"></script>
+	<link rel="stylesheet" href="style.css">
+	<!-- <link rel="stylesheet" href="bootstrap.css"> -->
+	<link rel="icon" type="images/x-icon" href="SaratovEmblem.svg">
+	<script src="https://api-maps.yandex.ru/2.1/?apikey=76302d85-a72b-4aaa-a52f-578d4dc59e44&lang=ru_RU"></script>
+	<script src="script.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+  	<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+
+	<script>
+		// Your web app's Firebase configuration
+		const firebaseConfig = {
+			apiKey: "AIzaSyBK66o3OCiEB3Z73Uf-CYamddyJYO5G6Ms",
+			authDomain: "yandex-maps-3270f.firebaseapp.com",
+			projectId: "yandex-maps-3270f",
+			storageBucket: "yandex-maps-3270f.appspot.com",
+			messagingSenderId: "427145089780",
+			appId: "1:427145089780:web:f347c7024a284f29e2c4a1",
+			measurementId: "G-ZPVNJ4C0QS"
+		};
+
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+		const auth = firebase.auth();
+
+		window.onload = () => {
+			auth.onAuthStateChanged((user) => {
+				if (user) {
+					const email = user.email;
+					document.getElementById('user-info').innerText = ` ${email}`;
+					document.getElementById('login-link').style.display = 'none';
+				} else {
+					document.getElementById('user-info').innerText = 'Войти';
+					document.getElementById('login-link').style.display = 'block';
+				}
+			});
+		};
+
+		function logout() {
+			auth.signOut().then(() => {
+				console.log('User signed out.');
+				window.location.reload();
+			}).catch((error) => {
+				console.error('Sign out error', error);
+			});
+		}
+
+	</script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="complexity">
+			<img class="SaratovEmblem" src="SaratovEmblem.svg">
+		</div>
+		<section>
+			<header>
+				<div class="header">
+					<span>
+						<h1>Угадай достопримечательность<br>Саратова</h1>
+						<div class="levels">
+							<div class="level" id='parks'>
+								<img src="Parks.svg">
+								<strong>Парки<strong>
+							</div>
+							<div class="level" id='museums'>
+								<img src="Museums.svg">
+								<strong>Музеи</strong>
+							</div>
+							<div class="level" id='theaters'>
+								<img src="Theatres.svg">
+								<strong>Театры</strong>
+							</div>
+							<div class="level">
+								<img src="Other.svg" id="other">
+								<strong id="log-out" onclick="logout()">Другое</strong>
+							</div>
+							<div class="level">
+								<a href="login.html"><img src="Account.svg" id="other"></a>
+								<a href="login.html"><strong id="user-info">Войти</strong></a>
+								<style>
+									a:active, a:hover, a {
+									text-decoration: none;
+									color: black;
+									}
+								</style>
+							</div>
+						</div>
+					</span>
+				</div>
+			</header>
+			<div class="action">
+				<button class="replay" id="replay">Заново</button>
+				<div class="blue_circle"></div><strong id="blue_circle"> 0% </strong>
+				<div class="green_circle"></div><strong id="green_circle"> 0% </strong>
+				<div class="red_circle"></div><strong id="red_circle"> 0% </strong>
+				<button class="next" id="next">Дальше</button>
+			</div>
+			<div id="player1" class="player"></div>
+			<div id="map" class="map"></div>
+			<div class="row-content">
+				<div class="information">
+					<strong id="info"> 
+						  
+					</strong> 
+				</div>
+				<div class="status">
+					<strong id="result"></strong>
+					<br>
+					<strong id="raduis"></strong> 
+				</div>
+			</div>
+			<div class="help">
+				<details>
+					<div class="history">
+						<strong>Как играть?</strong><br><br>
+					
+						С первых секунд вас встречают <strong>Журавли</strong> - первая локация уровня <strong>Парки</strong>.
+						Теперь попробуйте угадать, где они они находятся.
+						<br><br>
+						Вам поможет карта справа, которую можно увеличивать и уменьшать. После <strong>клика</strong> на карту вы узнаете, угадали вы или нет.
+						<br><br>
+						На карте отображается пеший маршрут от точки <strong>клика</strong> <font color="red">(A)</font> до достопримечательности <font color="blue">(B)</font>.
+						<br><br>
+						Кнопка <strong>Дальше</strong> позволит продолжить игру.
+						<br><br>
+						Если хотите повторить прохождение - кнопка <strong>Заново</strong> к вашим уcлугам.
+						<br><br>
+						В зависимости от того, насколько точно вы угадали расположение достопримечательности на карте, ваша точка попадает в окружности разного цвета:
+						<br><br>
+						в окружность <font color="blue">Синего</font> цвета при расстоянии до цели - 100 м,
+						<br><br>
+						в окружность <font color="green">Зелёного</font> цвета - 500 м, 
+						<br><br>
+						в окружность <font color="red">Красного</font> цвета - 1 км.
+						<br><br>
+						<strong>Разноцветные кружки</strong> показывают процентное соотношения того, в область какого цвета вы попали, к общему числу попыток:
+						<br><br>
+
+
+					
+						<div class="blue_circle"></div><strong id="blue_circle"> 42% </strong>
+						<div class="green_circle"></div><strong id="green_circle"> 24% </strong>
+						<div class="red_circle"></div><strong id="red_circle"> 34% </strong>
+
+						<br><br>
+						Расстояние вычисляется по прямой между <font color="red">(A)</font> и <font color="blue">(B)</font>.
+						<br><br>
+						Выбирайте уровни и познавайте достопримечательности родного города!
+						
+					</div>
+					<summary><strong>Помощь<strong></summary>
+					<div class="description">
+						<strong>Уровни: </strong>
+						<div class="level" id='parks'>
+							<img src="Parks.svg">
+							<strong> - 7 парков</strong>
+						</div>
+						<div class="level" id='museums'>
+							<img src="Museums.svg">
+							<strong> -  4 музея</strong>
+						</div>
+						<div class="level" id='theaters'>
+							<img src="Theatres.svg">
+							<strong> - 6 театров</strong>
+						</div>
+						<div class="level">
+							<img src="Other.svg" id="other">
+							<strong> - стадионы, церкви, памятники и многое другое</strong>
+						</div>
+						<strong>Кнопки: </strong>
+						<div>
+							<button class="replay">Заново</button>
+							<strong> - Пройти уровень с первой локации</strong>
+						</div>
+						<div>
+							<button class="next">Дальше</button>
+							<strong> - Следущая панорама текущего уровня</strong>
+						</div>
+					</div>
+					
+				</details>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

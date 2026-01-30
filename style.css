@@ -1,0 +1,255 @@
+@font-face {
+	font-family: 'Days One'; 
+	src: local('Days One'),
+		url(/fonts/DaysOne-Regula.ttf); 
+}
+
+.header {
+	display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+	
+	margin-bottom: 35px; 
+}
+
+.header span {
+	padding: 0 30px 0 30px ;
+	border: 3px solid black;
+	border-radius: 25px;
+}
+
+.header span .levels {
+	display: inline-block;
+	margin-left: 100px;
+	font-family: 'Days One'; 
+	font-size: 15px;
+}
+
+.level img, .level strong {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.level {
+	margin-right: 25px;
+}
+
+.header span .level {
+	display: inline-block;
+}
+
+.header span .level img {
+	display: block;
+}
+
+.header h1 {
+	font-family: 'Days One'; 
+	font-size: 25px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	display: inline-block;
+}
+
+.complexity {
+	margin-right: 0px;
+}
+
+.player {
+	width: 583px;
+	height: 416px;
+	/* border-radius: 25px; */
+	background-color: white;
+	/* margin-right: 65px; */
+	margin-right: 115px;
+}
+
+.map {
+	width: 583px;
+	height: 416px;
+	/* border-radius: 25px; */
+	/* border: 4px solid red; */
+	background-color: white;
+}
+
+.player, .map {
+	display: inline-block;
+}
+
+.container {
+	/* position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) */
+	display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+	vertical-align: middle;
+	padding: 0;
+} 
+
+.action button.replay, .action button.next, .help button {
+	font-family: 'Days One';
+	font-size: 15px;
+	width: 140px;
+	height: 53px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	border-radius: 25px;
+	border: 3px solid black;
+	background-color: white;
+}
+
+.action button:hover {
+	background-color: black;
+	color: white;
+}
+
+.action button.next {
+	margin-left: 145px;
+}
+
+.action button.replay {
+	margin-right: 555px;
+}
+
+.row-content {
+	margin-top: 15px;
+}
+
+.information {
+	margin-right: 115px;
+}
+
+.information, .status {
+	display: inline-block;
+	width: 583px;
+	font-family: 'Days One', sans-serif;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 300;
+	line-height: normal;
+	text-align: center;
+}
+
+
+[class*="copyrights-pane"] { /*скрытия прав Яндекс.Карт*/
+  display: none !important;
+}
+
+[class*="copyright"] { /*скрытия прав Яндекс.Карт*/
+  display: none !important;
+}
+
+[class*="panorama-control"] { /*скрытия прав Яндекс.Карт*/
+  display: none !important;
+}
+
+details{
+	font-family: 'Days One';
+	font-style: normal;
+	font-weight: 300;
+	line-height: normal;
+	font-size: 15px;
+	display:block;
+	background: #fff;
+	width:max-content;
+	border-radius: 8px;
+	overflow:hidden;
+	margin-bottom: 1.5rem;
+	margin-top: 60px;
+
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::-moz-list-bullet{list-style-type:none;}
+  summary::marker{display:none;} 
+  summary {
+	 display:block;
+	 padding: .3em 1em .3em .9em;
+	 border-bottom: 1px solid #e2e8f0;
+	 font-size: 15px;
+	 cursor: pointer;
+	 position: relative;
+  }
+  summary:before {  
+	top: .4em;
+	right: .4em;
+	color: transparent;
+	width: 0em;
+	height: 1em;  
+	content: "";
+	position: absolute;
+	transition: transform .5s;
+  }
+
+  summary:hover {
+	background-color: black;
+	color: white;
+  }
+
+  details[open] > summary:before {
+	transform: scale(1,-1);
+  }
+  summary ~ * {
+	 padding: 0 1em 10px 1.4em;
+  }
+  details[open] summary ~ *{ 
+	animation: sweep .5s ease-in-out;
+  }
+  @keyframes sweep {
+	0%    {opacity: 0;}
+	100%  {opacity: 1;}
+  }
+
+  .description, .history {
+	margin-top: 15px;
+	display: inline-block;
+  }
+
+  .history {
+	vertical-align: top;
+	width: 583px;
+	margin-right: 100px;
+	font-weight: 100;
+  }
+
+   .help .level {
+	margin-bottom: 15px;
+	margin-top: 20px;
+  } 
+
+  .help img, .help strong{
+	vertical-align: middle;
+  }
+
+  .help button {
+	margin-bottom: 0px;
+  }
+
+	.blue_circle, .green_circle, .red_circle {
+	width: 53px;
+	height: 53px;
+	display: inline-block;
+	border-radius: 50%;
+	vertical-align: middle;
+	margin-bottom: 5px;
+  }
+
+  .blue_circle {
+	background-color: blue;
+  }
+
+  .green_circle {
+	background-color: green;
+  }
+
+  .red_circle {
+	background-color: red;
+  }
+
+  .action strong {
+	font-family: 'Days One';
+  }

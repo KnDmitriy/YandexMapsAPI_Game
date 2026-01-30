@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация</title>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js"></script>
+  <link rel="stylesheet" href="style_auth.css">
+</head>
+<body>
+  <form id="signup-form">
+    <h1>Регистрация</h1>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <div class="information">
+      <strong id="info"> 
+  
+      </strong> 
+    </div>
+    <button type="submit">Зарегистрироваться</button>
+    <h8><a href="login.html">Войти в аккаунт</a><h8></h8>
+  </form>
+  
+
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBK66o3OCiEB3Z73Uf-CYamddyJYO5G6Ms",
+      authDomain: "yandex-maps-3270f.firebaseapp.com",
+      projectId: "yandex-maps-3270f",
+      storageBucket: "yandex-maps-3270f.appspot.com",
+      messagingSenderId: "427145089780",
+      appId: "1:427145089780:web:f347c7024a284f29e2c4a1",
+      measurementId: "G-ZPVNJ4C0QS"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    var delay = 0; // Время задержки между печатанием символов в милисекндах.
+    elem_info = document.getElementById("info"); // id элемента для вывода результата    
+
+    console.log(elem_info)
+
+    var print_text = function(text, elem, delay) {
+        if(text.length > 0) {
+            elem.innerHTML = text;
+            
+        }
+    }
+
+    var replace_text = function(elem) {
+        elem.innerHTML = ''
+    }
+
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      replace_text(elem_info)
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("User created successfully:", user);
+          print_text('Аккаунт создан успешно. Проверка почты отправлена.', elem_info, delay);
+
+          // Send email verification
+          user.sendEmailVerification()
+            .then(() => {
+              console.log("Email verification sent.");
+              print_text('Пожалуйста, проверьте свою почту для подтверждения.', elem_info, delay);
+            })
+            .catch((error) => {
+              console.error("Error sending email verification:", error);
+              print_text('Ошибка при отправке подтверждения почты. Попробуйте еще раз.', elem_info, delay);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error("Error creating user:", errorCode, errorMessage);
+          if (errorCode === 'auth/email-already-in-use') {
+            print_text('Аккаунт для данной почты уже создан.', elem_info, delay);
+          } else {
+            print_text(`Ошибка: ${errorMessage}`, elem_info, delay);
+          }
+        });
+
+    });
+  </script>
+</body>
+</html>
