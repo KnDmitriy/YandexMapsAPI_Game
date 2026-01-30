@@ -25,15 +25,15 @@ function replaceFirebaseConfig(html) {
     process.exit(1);
   }
 
-  // Заменяем каждое поле в firebaseConfig
+  // Заменяем плейсхолдеры на реальные значения из .env
   let updated = html;
-  updated = updated.replace(/apiKey:\s*"[^"]+"/, `apiKey: "${config.apiKey}"`);
-  updated = updated.replace(/authDomain:\s*"[^"]+"/, `authDomain: "${config.authDomain}"`);
-  updated = updated.replace(/projectId:\s*"[^"]+"/, `projectId: "${config.projectId}"`);
-  updated = updated.replace(/storageBucket:\s*"[^"]+"/, `storageBucket: "${config.storageBucket}"`);
-  updated = updated.replace(/messagingSenderId:\s*"[^"]+"/, `messagingSenderId: "${config.messagingSenderId}"`);
-  updated = updated.replace(/appId:\s*"[^"]+"/, `appId: "${config.appId}"`);
-  updated = updated.replace(/measurementId:\s*"[^"]+"/, `measurementId: "${config.measurementId}"`);
+  updated = updated.replace(/\{\{FIREBASE_API_KEY\}\}/g, config.apiKey);
+  updated = updated.replace(/\{\{FIREBASE_AUTH_DOMAIN\}\}/g, config.authDomain);
+  updated = updated.replace(/\{\{FIREBASE_PROJECT_ID\}\}/g, config.projectId);
+  updated = updated.replace(/\{\{FIREBASE_STORAGE_BUCKET\}\}/g, config.storageBucket);
+  updated = updated.replace(/\{\{FIREBASE_MESSAGING_SENDER_ID\}\}/g, config.messagingSenderId);
+  updated = updated.replace(/\{\{FIREBASE_APP_ID\}\}/g, config.appId);
+  updated = updated.replace(/\{\{FIREBASE_MEASUREMENT_ID\}\}/g, config.measurementId);
 
   return updated;
 }
