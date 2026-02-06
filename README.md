@@ -14,6 +14,12 @@
 - `dotenv` для работы с `.env`
 
 ---
+<img width="1406" height="762" alt="Снимок экрана 2026-02-06 в 16 38 54" src="https://github.com/user-attachments/assets/044154f5-e0ec-4822-b3cd-aff749d3849b" />
+
+<img width="1239" height="748" alt="Снимок экрана 2026-02-06 в 16 39 40" src="https://github.com/user-attachments/assets/8f7bec32-bf90-4c33-bf77-e38b320f486f" />
+
+<img width="516" height="457" alt="Снимок экрана 2026-02-06 в 16 40 19" src="https://github.com/user-attachments/assets/f31ec5e3-b884-4615-b449-98cd2d2d9321" />
+
 
 ## Структура проекта
 
